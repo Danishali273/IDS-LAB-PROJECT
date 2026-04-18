@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AI-powered Telco Customer Churn Prediction System — Predict and prevent customer churn with advanced machine learning.">
+    <title>ChurnGuard AI — Customer Churn Prediction</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="bg-animation">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                        <circle cx="16" cy="16" r="14" stroke="url(#grad)" stroke-width="2.5"/>
+                        <path d="M10 16L14 20L22 12" stroke="url(#grad)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <defs>
+                            <linearGradient id="grad" x1="0" y1="0" x2="32" y2="32">
+                                <stop offset="0%" stop-color="#6366f1"/>
+                                <stop offset="100%" stop-color="#06b6d4"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </div>
+                <span class="logo-text">ChurnGuard<span class="logo-ai">AI</span></span>
+            </div>
+            <nav class="nav">
+                <a href="#predict" class="nav-link active" id="nav-predict">Predict</a>
+                <a href="#insights" class="nav-link" id="nav-insights">Insights</a>
+                <a href="#models" class="nav-link" id="nav-models">Models</a>
+            </nav>
+            <div class="header-badge" id="model-badge">
+                <span class="badge-dot"></span>
+                <span id="badge-model-name">Loading...</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="main">
+        <!-- Hero Section -->
+        <section class="hero" id="hero">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    Predict Customer <span class="gradient-text">Churn</span> with AI
+                </h1>
+                <p class="hero-subtitle">
+                    Advanced machine learning for telecom customer retention — analyze risk factors, predict churn probability, and take proactive action.
+                </p>
+                <div class="hero-stats" id="hero-stats">
+                    <div class="stat-card">
+                        <span class="stat-value" id="stat-accuracy">—</span>
+                        <span class="stat-label">Accuracy</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-value" id="stat-auc">—</span>
+                        <span class="stat-label">ROC-AUC</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-value" id="stat-f1">—</span>
+                        <span class="stat-label">F1-Score</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Prediction Section -->
+        <section class="section" id="predict">
+            <h2 class="section-title">Customer Churn Prediction</h2>
+            <p class="section-desc">Enter customer details below to predict their likelihood of churning.</p>
+
+            <div class="prediction-grid">
+                <!-- Input Form -->
+                <div class="glass-card form-card">
+                    <h3 class="card-title">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="7" r="4" stroke="currentColor" stroke-width="1.5"/><path d="M3 18c0-3.866 3.134-7 7-7s7 3.134 7 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                        Customer Information
+                    </h3>
+
+                    <form id="prediction-form">
+                        <!-- Demographics -->
+                        <div class="form-group-title">Demographics</div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="gender">Gender</label>
+                                <select id="gender" name="gender">
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="SeniorCitizen">Senior Citizen</label>
+                                <select id="SeniorCitizen" name="SeniorCitizen">
+                                    <option value="No">No</option>
+                                    <option value="Yes">Yes</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="Partner">Partner</label>
+                                <select id="Partner" name="Partner">
+                                    <option value="No">No</option>
+                                    <option value="Yes">Yes</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="Dependents">Dependents</label>
+                                <select id="Dependents" name="Dependents">
+                                    <option value="No">No</option>
+                                    <option value="Yes">Yes</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Account Info -->
+                        <div class="form-group-title">Account Information</div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="tenure">Tenure (months)</label>
+                                <input type="range" id="tenure" name="tenure" min="0" max="72" value="12" oninput="document.getElementById('tenure-val').textContent=this.value">
+                                <span class="range-value" id="tenure-val">12</span>
+                            </div>
+                            <div class="form-group">
+                                <label for="Contract">Contract</label>
+                                <select id="Contract" name="Contract">
+                                    <option value="Month-to-month">Month-to-month</option>
+                                    <option value="One year">One year</option>
+                                    <option value="Two year">Two year</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="MonthlyCharges">Monthly Charges ($)</label>
+                                <input type="range" id="MonthlyCharges" name="MonthlyCharges" min="18" max="120" value="50" step="0.05" oninput="document.getElementById('monthly-val').textContent='$'+this.value">
+                                <span class="range-value" id="monthly-val">$50</span>
+                            </div>
+                            <div class="form-group">
+                                <label for="TotalCharges">Total Charges ($)</label>
+                                <input type="number" id="TotalCharges" name="TotalCharges" min="0" max="10000" value="600" step="0.01" placeholder="Enter total charges">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="PaperlessBilling">Paperless Billing</label>
+                                <select id="PaperlessBilling" name="PaperlessBilling">
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="PaymentMethod">Payment Method</label>
+                                <select id="PaymentMethod" name="PaymentMethod">
+                                    <option value="Electronic check">Electronic check</option>
+                                    <option value="Mailed check">Mailed check</option>
+                                    <option value="Bank transfer (automatic)">Bank transfer (auto)</option>
+                                    <option value="Credit card (automatic)">Credit card (auto)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Services -->
+                        <div class="form-group-title">Services</div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="PhoneService">Phone Service</label>
+                                <select id="PhoneService" name="PhoneService">
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="MultipleLines">Multiple Lines</label>
+                                <select id="MultipleLines" name="MultipleLines">
+                                    <option value="No">No</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No phone service">No phone service</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="InternetService">Internet Service</label>
+                                <select id="InternetService" name="InternetService">
+                                    <option value="Fiber optic">Fiber optic</option>
+                                    <option value="DSL">DSL</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="OnlineSecurity">Online Security</label>
+                                <select id="OnlineSecurity" name="OnlineSecurity">
+                                    <option value="No">No</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No internet service">No internet service</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="OnlineBackup">Online Backup</label>
+                                <select id="OnlineBackup" name="OnlineBackup">
+                                    <option value="No">No</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No internet service">No internet service</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="DeviceProtection">Device Protection</label>
+                                <select id="DeviceProtection" name="DeviceProtection">
+                                    <option value="No">No</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No internet service">No internet service</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="TechSupport">Tech Support</label>
+                                <select id="TechSupport" name="TechSupport">
+                                    <option value="No">No</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No internet service">No internet service</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="StreamingTV">Streaming TV</label>
+                                <select id="StreamingTV" name="StreamingTV">
+                                    <option value="No">No</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No internet service">No internet service</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row single">
+                            <div class="form-group">
+                                <label for="StreamingMovies">Streaming Movies</label>
+                                <select id="StreamingMovies" name="StreamingMovies">
+                                    <option value="No">No</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No internet service">No internet service</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="predict-btn" id="predict-btn">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2L18 10L10 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M18 10H2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                            Predict Churn
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Results Panel -->
+                <div class="results-panel">
+                    <!-- Prediction Result -->
+                    <div class="glass-card result-card" id="result-card">
+                        <div class="result-placeholder" id="result-placeholder">
+                            <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+                                <circle cx="32" cy="32" r="28" stroke="url(#resGrad)" stroke-width="2" stroke-dasharray="8 4"/>
+                                <path d="M22 32L28 38L42 24" stroke="url(#resGrad)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
+                                <defs><linearGradient id="resGrad" x1="0" y1="0" x2="64" y2="64"><stop offset="0%" stop-color="#6366f1"/><stop offset="100%" stop-color="#06b6d4"/></linearGradient></defs>
+                            </svg>
+                            <p>Enter customer details and click <strong>Predict Churn</strong> to see results</p>
+                        </div>
+                        <div class="result-content hidden" id="result-content">
+                            <div class="gauge-container">
+                                <svg class="gauge" viewBox="0 0 200 120" id="gauge-svg">
+                                    <defs>
+                                        <linearGradient id="gaugeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                            <stop offset="0%" stop-color="#22c55e"/>
+                                            <stop offset="50%" stop-color="#f59e0b"/>
+                                            <stop offset="100%" stop-color="#ef4444"/>
+                                        </linearGradient>
+                                    </defs>
+                                    <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="12" stroke-linecap="round"/>
+                                    <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="url(#gaugeGrad)" stroke-width="12" stroke-linecap="round" stroke-dasharray="0 251.33" id="gauge-fill"/>
+                                    <text x="100" y="85" text-anchor="middle" fill="white" font-size="28" font-weight="800" id="gauge-text">0%</text>
+                                    <text x="100" y="105" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-size="10" font-weight="500">CHURN PROBABILITY</text>
+                                </svg>
+                            </div>
+                            <div class="prediction-badge" id="prediction-badge">
+                                <span class="badge-icon" id="badge-icon">●</span>
+                                <span id="prediction-label">—</span>
+                            </div>
+                            <div class="risk-level" id="risk-level">
+                                <span>Risk Level:</span>
+                                <span class="risk-tag" id="risk-tag">—</span>
+                            </div>
+                            <div class="probability-bars">
+                                <div class="prob-bar">
+                                    <span class="prob-label">Churn</span>
+                                    <div class="prob-track">
+                                        <div class="prob-fill churn-fill" id="churn-bar" style="width: 0%"></div>
+                                    </div>
+                                    <span class="prob-value" id="churn-pct">0%</span>
+                                </div>
+                                <div class="prob-bar">
+                                    <span class="prob-label">Retain</span>
+                                    <div class="prob-track">
+                                        <div class="prob-fill retain-fill" id="retain-bar" style="width: 0%"></div>
+                                    </div>
+                                    <span class="prob-value" id="retain-pct">0%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Risk Factors -->
+                    <div class="glass-card risk-card hidden" id="risk-card">
+                        <h3 class="card-title">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2L18 18H2L10 2Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M10 8V12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="10" cy="15" r="0.5" fill="currentColor"/></svg>
+                            Risk Factors
+                        </h3>
+                        <ul class="risk-list" id="risk-list"></ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Insights Section -->
+        <section class="section" id="insights">
+            <h2 class="section-title">Feature Insights</h2>
+            <p class="section-desc">Discover which factors most influence customer churn decisions.</p>
+            <div class="glass-card">
+                <h3 class="card-title">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="10" width="3" height="8" rx="1" fill="currentColor" opacity="0.4"/><rect x="7" y="6" width="3" height="12" rx="1" fill="currentColor" opacity="0.6"/><rect x="12" y="3" width="3" height="15" rx="1" fill="currentColor" opacity="0.8"/><rect x="17" y="1" width="3" height="17" rx="1" fill="currentColor"/></svg>
+                    Top Feature Importances
+                </h3>
+                <div class="feature-chart" id="feature-chart"></div>
+            </div>
+        </section>
+
+        <!-- Models Section -->
+        <section class="section" id="models">
+            <h2 class="section-title">Model Comparison</h2>
+            <p class="section-desc">Performance metrics across all trained models.</p>
+            <div class="glass-card">
+                <div class="table-container">
+                    <table class="model-table" id="model-table">
+                        <thead>
+                            <tr>
+                                <th>Model</th>
+                                <th>Accuracy</th>
+                                <th>Precision</th>
+                                <th>Recall</th>
+                                <th>F1-Score</th>
+                                <th>ROC-AUC</th>
+                            </tr>
+                        </thead>
+                        <tbody id="model-table-body">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>ChurnGuard AI — Powered by Machine Learning · Built with Python, Scikit-Learn & XGBoost</p>
+    </footer>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>
