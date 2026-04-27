@@ -74,66 +74,89 @@ def predict():
         input_data = {col: 0 for col in feature_names}
         
         # Numerical features
-        input_data['tenure'] = float(data.get('tenure', 0))
-        input_data['MonthlyCharges'] = float(data.get('MonthlyCharges', 0))
-        input_data['TotalCharges'] = float(data.get('TotalCharges', 0))
+        input_data['Age'] = float(data.get('Age', 0))
+        input_data['Number of Dependents'] = float(data.get('Number of Dependents', 0))
+        input_data['Number of Referrals'] = float(data.get('Number of Referrals', 0))
+        input_data['Tenure in Months'] = float(data.get('Tenure in Months', 0))
+        input_data['Avg Monthly Long Distance Charges'] = float(data.get('Avg Monthly Long Distance Charges', 0))
+        input_data['Avg Monthly GB Download'] = float(data.get('Avg Monthly GB Download', 0))
+        input_data['Monthly Charge'] = float(data.get('Monthly Charge', 0))
+        input_data['Total Charges'] = float(data.get('Total Charges', 0))
+        input_data['Total Refunds'] = float(data.get('Total Refunds', 0))
+        input_data['Total Extra Data Charges'] = float(data.get('Total Extra Data Charges', 0))
+        input_data['Total Long Distance Charges'] = float(data.get('Total Long Distance Charges', 0))
+        input_data['Total Revenue'] = float(data.get('Total Revenue', 0))
         
-        # Binary features (Yes/No → _Yes columns from get_dummies with drop_first=True)
+        # Binary/Categorical features
         binary_maps = {
-            'gender': 'gender_Male',
-            'SeniorCitizen': 'SeniorCitizen_Yes',
-            'Partner': 'Partner_Yes',
-            'Dependents': 'Dependents_Yes',
-            'PhoneService': 'PhoneService_Yes',
-            'PaperlessBilling': 'PaperlessBilling_Yes'
+            'Gender': 'Gender_Male',
+            'Married': 'Married_Yes',
+            'Phone Service': 'Phone Service_Yes',
+            'Paperless Billing': 'Paperless Billing_Yes',
+            'Online Security': 'Online Security_Yes',
+            'Online Backup': 'Online Backup_Yes',
+            'Device Protection Plan': 'Device Protection Plan_Yes',
+            'Premium Tech Support': 'Premium Tech Support_Yes',
+            'Streaming TV': 'Streaming TV_Yes',
+            'Streaming Movies': 'Streaming Movies_Yes',
+            'Streaming Music': 'Streaming Music_Yes',
+            'Unlimited Data': 'Unlimited Data_Yes'
         }
         
         for field, col_name in binary_maps.items():
             val = data.get(field, 'No')
             if col_name in input_data:
-                input_data[col_name] = 1 if val == 'Yes' or val == 'Male' else 0
+                input_data[col_name] = 1 if val in ['Yes', 'Male'] else 0
         
-        # MultipleLines
-        ml = data.get('MultipleLines', 'No')
-        if 'MultipleLines_No phone service' in input_data:
-            input_data['MultipleLines_No phone service'] = 1 if ml == 'No phone service' else 0
-        if 'MultipleLines_Yes' in input_data:
-            input_data['MultipleLines_Yes'] = 1 if ml == 'Yes' else 0
+        # Multiple Lines
+        ml = data.get('Multiple Lines', 'No')
+        if 'Multiple Lines_No phone service' in input_data:
+            input_data['Multiple Lines_No phone service'] = 1 if ml == 'No phone service' else 0
+        if 'Multiple Lines_Yes' in input_data:
+            input_data['Multiple Lines_Yes'] = 1 if ml == 'Yes' else 0
         
-        # InternetService
-        inet = data.get('InternetService', 'No')
-        if 'InternetService_Fiber optic' in input_data:
-            input_data['InternetService_Fiber optic'] = 1 if inet == 'Fiber optic' else 0
-        if 'InternetService_No' in input_data:
-            input_data['InternetService_No'] = 1 if inet == 'No' else 0
+        # Internet Service
+        inet_svc = data.get('Internet Service', 'Yes')
+        if 'Internet Service_No' in input_data:
+            input_data['Internet Service_No'] = 1 if inet_svc == 'No' else 0
         
-        # Internet-dependent services
-        inet_services = ['OnlineSecurity', 'OnlineBackup', 'DeviceProtection', 
-                         'TechSupport', 'StreamingTV', 'StreamingMovies']
-        for svc in inet_services:
-            val = data.get(svc, 'No')
-            col_noint = f'{svc}_No internet service'
-            col_yes = f'{svc}_Yes'
-            if col_noint in input_data:
-                input_data[col_noint] = 1 if val == 'No internet service' else 0
-            if col_yes in input_data:
-                input_data[col_yes] = 1 if val == 'Yes' else 0
+        # Internet Type
+        inet_type = data.get('Internet Type', 'Cable')
+        if 'Internet Type_DSL' in input_data:
+            input_data['Internet Type_DSL'] = 1 if inet_type == 'DSL' else 0
+        if 'Internet Type_Fiber Optic' in input_data:
+            input_data['Internet Type_Fiber Optic'] = 1 if inet_type == 'Fiber Optic' else 0
         
         # Contract
-        contract = data.get('Contract', 'Month-to-month')
-        if 'Contract_One year' in input_data:
-            input_data['Contract_One year'] = 1 if contract == 'One year' else 0
-        if 'Contract_Two year' in input_data:
-            input_data['Contract_Two year'] = 1 if contract == 'Two year' else 0
+        contract = data.get('Contract', 'Month-to-Month')
+        if 'Contract_One Year' in input_data:
+            input_data['Contract_One Year'] = 1 if contract == 'One Year' else 0
+        if 'Contract_Two Year' in input_data:
+            input_data['Contract_Two Year'] = 1 if contract == 'Two Year' else 0
         
-        # PaymentMethod
-        pm = data.get('PaymentMethod', 'Electronic check')
-        if 'PaymentMethod_Credit card (automatic)' in input_data:
-            input_data['PaymentMethod_Credit card (automatic)'] = 1 if pm == 'Credit card (automatic)' else 0
-        if 'PaymentMethod_Electronic check' in input_data:
-            input_data['PaymentMethod_Electronic check'] = 1 if pm == 'Electronic check' else 0
-        if 'PaymentMethod_Mailed check' in input_data:
-            input_data['PaymentMethod_Mailed check'] = 1 if pm == 'Mailed check' else 0
+        # Payment Method
+        pm = data.get('Payment Method', 'Credit Card')
+        if 'Payment Method_Bank Withdrawal' in input_data:
+            input_data['Payment Method_Bank Withdrawal'] = 1 if pm == 'Bank Withdrawal' else 0
+        if 'Payment Method_Credit Card' in input_data:
+            input_data['Payment Method_Credit Card'] = 1 if pm == 'Credit Card' else 0
+        if 'Payment Method_Mailed Check' in input_data:
+            input_data['Payment Method_Mailed Check'] = 1 if pm == 'Mailed Check' else 0
+        
+        # Offer
+        offer = data.get('Offer', 'None')
+        if 'Offer_None' in input_data:
+            input_data['Offer_None'] = 1 if offer == 'None' else 0
+        elif 'Offer' in input_data:
+            # Handle if Offer is encoded differently
+            for offer_val in ['A', 'B', 'C', 'D', 'E', 'None']:
+                col = f'Offer_{offer_val}'
+                if col in input_data:
+                    input_data[col] = 1 if offer == offer_val else 0
+        
+        # City encoding (create dummy for commonly occurring cities or leave as 0)
+        city = data.get('City', 'Unknown')
+        # City columns would be added dynamically based on training data
         
         # Create DataFrame with correct column order
         input_df = pd.DataFrame([input_data], columns=feature_names)
@@ -147,26 +170,31 @@ def predict():
         
         # Get risk factors
         risk_factors = []
-        if float(data.get('tenure', 0)) < 12:
-            risk_factors.append('Short tenure (< 12 months)')
-        if float(data.get('MonthlyCharges', 0)) > 70:
-            risk_factors.append('High monthly charges')
-        if contract == 'Month-to-month':
-            risk_factors.append('Month-to-month contract')
-        if inet == 'Fiber optic':
-            risk_factors.append('Fiber optic internet')
-        if data.get('OnlineSecurity', 'No') == 'No':
-            risk_factors.append('No online security')
-        if data.get('TechSupport', 'No') == 'No':
-            risk_factors.append('No tech support')
-        if pm == 'Electronic check':
-            risk_factors.append('Electronic check payment')
-        if data.get('PaperlessBilling', 'No') == 'Yes':
-            risk_factors.append('Paperless billing')
+        tenure = float(data.get('Tenure in Months', 0))
+        monthly_charge = float(data.get('Monthly Charge', 0))
+        
+        if tenure < 12:
+            risk_factors.append('New customer (tenure < 12 months)')
+        if monthly_charge > 80:
+            risk_factors.append('High monthly charges (> $80)')
+        if contract == 'Month-to-Month':
+            risk_factors.append('Month-to-Month contract (less committed)')
+        if inet_type == 'Fiber Optic':
+            risk_factors.append('Fiber Optic internet user')
+        if data.get('Online Security') == 'No':
+            risk_factors.append('No Online Security service')
+        if data.get('Premium Tech Support') == 'No':
+            risk_factors.append('No Premium Tech Support')
+        if pm == 'Bank Withdrawal':
+            risk_factors.append('Bank Withdrawal payment method')
+        if data.get('Paperless Billing') == 'Yes':
+            risk_factors.append('Paperless Billing enabled')
+        if float(data.get('Number of Referrals', 0)) == 0:
+            risk_factors.append('No referrals (lower engagement)')
         
         return jsonify({
             'success': True,
-            'prediction': 'Churn' if prediction == 1 else 'No Churn',
+            'prediction': 'Churned' if prediction == 1 else 'Retained',
             'churn_probability': round(probability * 100, 2),
             'retention_probability': round((1 - probability) * 100, 2),
             'risk_level': 'High' if probability > 0.7 else ('Medium' if probability > 0.4 else 'Low'),
