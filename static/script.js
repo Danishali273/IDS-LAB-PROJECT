@@ -63,19 +63,37 @@ function setupForm() {
         await makePrediction();
     });
 
-    // Auto-calculate TotalCharges based on tenure and MonthlyCharges
-    const tenureInput = document.getElementById('tenure');
-    const monthlyInput = document.getElementById('MonthlyCharges');
-    const totalInput = document.getElementById('TotalCharges');
+    // Auto-calculate totals from key billing inputs
+    const tenureInput = document.getElementById('tenureMonths');
+    const monthlyInput = document.getElementById('monthlyCharge');
+    const totalInput = document.getElementById('totalCharges');
+    const longDistanceAvgInput = document.getElementById('avgMonthlyLongDistanceCharges');
+    const longDistanceTotalInput = document.getElementById('totalLongDistanceCharges');
+    const revenueInput = document.getElementById('totalRevenue');
+    const refundsInput = document.getElementById('totalRefunds');
+    const extraDataInput = document.getElementById('totalExtraDataCharges');
 
     function updateTotalCharges() {
-        const tenure = parseInt(tenureInput.value);
-        const monthly = parseFloat(monthlyInput.value);
-        totalInput.value = (tenure * monthly).toFixed(2);
+        const tenure = parseFloat(tenureInput.value || 0);
+        const monthly = parseFloat(monthlyInput.value || 0);
+        const avgLongDistance = parseFloat(longDistanceAvgInput.value || 0);
+        const refunds = parseFloat(refundsInput.value || 0);
+        const extraData = parseFloat(extraDataInput.value || 0);
+
+        const totalCharges = tenure * monthly;
+        const totalLongDistance = tenure * avgLongDistance;
+        const totalRevenue = totalCharges + totalLongDistance + extraData - refunds;
+
+        totalInput.value = totalCharges.toFixed(2);
+        longDistanceTotalInput.value = totalLongDistance.toFixed(2);
+        revenueInput.value = totalRevenue.toFixed(2);
     }
 
     tenureInput.addEventListener('input', updateTotalCharges);
     monthlyInput.addEventListener('input', updateTotalCharges);
+    longDistanceAvgInput.addEventListener('input', updateTotalCharges);
+    refundsInput.addEventListener('input', updateTotalCharges);
+    extraDataInput.addEventListener('input', updateTotalCharges);
     updateTotalCharges();
 }
 
@@ -86,25 +104,36 @@ async function makePrediction() {
     btn.textContent = 'Analyzing...';
 
     const formData = {
-        gender: document.getElementById('gender').value,
-        SeniorCitizen: document.getElementById('SeniorCitizen').value,
-        Partner: document.getElementById('Partner').value,
-        Dependents: document.getElementById('Dependents').value,
-        tenure: document.getElementById('tenure').value,
-        PhoneService: document.getElementById('PhoneService').value,
-        MultipleLines: document.getElementById('MultipleLines').value,
-        InternetService: document.getElementById('InternetService').value,
-        OnlineSecurity: document.getElementById('OnlineSecurity').value,
-        OnlineBackup: document.getElementById('OnlineBackup').value,
-        DeviceProtection: document.getElementById('DeviceProtection').value,
-        TechSupport: document.getElementById('TechSupport').value,
-        StreamingTV: document.getElementById('StreamingTV').value,
-        StreamingMovies: document.getElementById('StreamingMovies').value,
-        Contract: document.getElementById('Contract').value,
-        PaperlessBilling: document.getElementById('PaperlessBilling').value,
-        PaymentMethod: document.getElementById('PaymentMethod').value,
-        MonthlyCharges: document.getElementById('MonthlyCharges').value,
-        TotalCharges: document.getElementById('TotalCharges').value
+        'Gender': document.getElementById('gender').value,
+        'Age': document.getElementById('age').value,
+        'Married': document.getElementById('married').value,
+        'Number of Dependents': document.getElementById('numberOfDependents').value,
+        'Number of Referrals': document.getElementById('numberOfReferrals').value,
+        'Tenure in Months': document.getElementById('tenureMonths').value,
+        'Offer': document.getElementById('offer').value,
+        'Phone Service': document.getElementById('phoneService').value,
+        'Avg Monthly Long Distance Charges': document.getElementById('avgMonthlyLongDistanceCharges').value,
+        'Multiple Lines': document.getElementById('multipleLines').value,
+        'Internet Service': document.getElementById('internetService').value,
+        'Internet Type': document.getElementById('internetType').value,
+        'Avg Monthly GB Download': document.getElementById('avgMonthlyGbDownload').value,
+        'Online Security': document.getElementById('onlineSecurity').value,
+        'Online Backup': document.getElementById('onlineBackup').value,
+        'Device Protection Plan': document.getElementById('deviceProtectionPlan').value,
+        'Premium Tech Support': document.getElementById('premiumTechSupport').value,
+        'Streaming TV': document.getElementById('streamingTv').value,
+        'Streaming Movies': document.getElementById('streamingMovies').value,
+        'Streaming Music': document.getElementById('streamingMusic').value,
+        'Unlimited Data': document.getElementById('unlimitedData').value,
+        'Contract': document.getElementById('contract').value,
+        'Paperless Billing': document.getElementById('paperlessBilling').value,
+        'Payment Method': document.getElementById('paymentMethod').value,
+        'Monthly Charge': document.getElementById('monthlyCharge').value,
+        'Total Charges': document.getElementById('totalCharges').value,
+        'Total Refunds': document.getElementById('totalRefunds').value,
+        'Total Extra Data Charges': document.getElementById('totalExtraDataCharges').value,
+        'Total Long Distance Charges': document.getElementById('totalLongDistanceCharges').value,
+        'Total Revenue': document.getElementById('totalRevenue').value
     };
 
     try {
@@ -139,7 +168,7 @@ function displayResult(result) {
     document.getElementById('result-placeholder').classList.add('hidden');
     document.getElementById('result-content').classList.remove('hidden');
 
-    const isChurn = result.prediction === 'Churn';
+    const isChurn = result.prediction === 'Churned';
     const probability = result.churn_probability;
 
     // Animate gauge

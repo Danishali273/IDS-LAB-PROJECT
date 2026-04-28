@@ -69,6 +69,23 @@ def predict():
     """Make a churn prediction for a customer."""
     try:
         data = request.json
+
+        def normalize_text(value):
+            return ''.join(ch for ch in str(value).lower() if ch.isalnum())
+
+        def set_one_hot(prefix, raw_value):
+            """Set a one-hot column by matching normalized category text."""
+            norm_value = normalize_text(raw_value)
+            if prefix == 'Offer' and len(norm_value) == 1:
+                norm_value = f'offer{norm_value}'
+
+            for col_name in input_data:
+                if not col_name.startswith(f'{prefix}_'):
+                    continue
+                suffix = col_name[len(prefix) + 1:]
+                if normalize_text(suffix) == norm_value:
+                    input_data[col_name] = 1
+                    break
         
         # Build feature vector matching the training columns
         input_data = {col: 0 for col in feature_names}
@@ -108,55 +125,23 @@ def predict():
             if col_name in input_data:
                 input_data[col_name] = 1 if val in ['Yes', 'Male'] else 0
         
-        # Multiple Lines
+        # Multi-class categorical fields
         ml = data.get('Multiple Lines', 'No')
-        if 'Multiple Lines_No phone service' in input_data:
-            input_data['Multiple Lines_No phone service'] = 1 if ml == 'No phone service' else 0
-        if 'Multiple Lines_Yes' in input_data:
-            input_data['Multiple Lines_Yes'] = 1 if ml == 'Yes' else 0
-        
-        # Internet Service
         inet_svc = data.get('Internet Service', 'Yes')
-        if 'Internet Service_No' in input_data:
-            input_data['Internet Service_No'] = 1 if inet_svc == 'No' else 0
-        
-        # Internet Type
         inet_type = data.get('Internet Type', 'Cable')
-        if 'Internet Type_DSL' in input_data:
-            input_data['Internet Type_DSL'] = 1 if inet_type == 'DSL' else 0
-        if 'Internet Type_Fiber Optic' in input_data:
-            input_data['Internet Type_Fiber Optic'] = 1 if inet_type == 'Fiber Optic' else 0
-        
-        # Contract
         contract = data.get('Contract', 'Month-to-Month')
-        if 'Contract_One Year' in input_data:
-            input_data['Contract_One Year'] = 1 if contract == 'One Year' else 0
-        if 'Contract_Two Year' in input_data:
-            input_data['Contract_Two Year'] = 1 if contract == 'Two Year' else 0
-        
-        # Payment Method
         pm = data.get('Payment Method', 'Credit Card')
-        if 'Payment Method_Bank Withdrawal' in input_data:
-            input_data['Payment Method_Bank Withdrawal'] = 1 if pm == 'Bank Withdrawal' else 0
-        if 'Payment Method_Credit Card' in input_data:
-            input_data['Payment Method_Credit Card'] = 1 if pm == 'Credit Card' else 0
-        if 'Payment Method_Mailed Check' in input_data:
-            input_data['Payment Method_Mailed Check'] = 1 if pm == 'Mailed Check' else 0
-        
-        # Offer
         offer = data.get('Offer', 'None')
-        if 'Offer_None' in input_data:
-            input_data['Offer_None'] = 1 if offer == 'None' else 0
-        elif 'Offer' in input_data:
-            # Handle if Offer is encoded differently
-            for offer_val in ['A', 'B', 'C', 'D', 'E', 'None']:
-                col = f'Offer_{offer_val}'
-                if col in input_data:
-                    input_data[col] = 1 if offer == offer_val else 0
-        
-        # City encoding (create dummy for commonly occurring cities or leave as 0)
-        city = data.get('City', 'Unknown')
-        # City columns would be added dynamically based on training data
+        city = data.get('City', '')
+
+        set_one_hot('Multiple Lines', ml)
+        set_one_hot('Internet Service', inet_svc)
+        set_one_hot('Internet Type', inet_type)
+        set_one_hot('Contract', contract)
+        set_one_hot('Payment Method', pm)
+        set_one_hot('Offer', offer)
+        if city:
+            set_one_hot('City', city)
         
         # Create DataFrame with correct column order
         input_df = pd.DataFrame([input_data], columns=feature_names)

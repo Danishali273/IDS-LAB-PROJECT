@@ -92,33 +92,28 @@
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="gender">Gender</label>
-                                <select id="gender" name="gender">
+                                <select id="gender" name="Gender">
                                     <option value="Male">Male</option>
                                     <option value="Female">Female</option>
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="SeniorCitizen">Senior Citizen</label>
-                                <select id="SeniorCitizen" name="SeniorCitizen">
-                                    <option value="No">No</option>
-                                    <option value="Yes">Yes</option>
-                                </select>
+                                <label for="age">Age</label>
+                                <input type="range" id="age" name="Age" min="18" max="100" value="40" oninput="document.getElementById('age-val').textContent=this.value">
+                                <span class="range-value" id="age-val">40</span>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="Partner">Partner</label>
-                                <select id="Partner" name="Partner">
+                                <label for="married">Married</label>
+                                <select id="married" name="Married">
                                     <option value="No">No</option>
                                     <option value="Yes">Yes</option>
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="Dependents">Dependents</label>
-                                <select id="Dependents" name="Dependents">
-                                    <option value="No">No</option>
-                                    <option value="Yes">Yes</option>
-                                </select>
+                                <label for="numberOfDependents">Number of Dependents</label>
+                                <input type="number" id="numberOfDependents" name="Number of Dependents" min="0" max="10" value="0">
                             </div>
                         </div>
 
@@ -126,45 +121,90 @@
                         <div class="form-group-title">Account Information</div>
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="tenure">Tenure (months)</label>
-                                <input type="range" id="tenure" name="tenure" min="0" max="72" value="12" oninput="document.getElementById('tenure-val').textContent=this.value">
-                                <span class="range-value" id="tenure-val">12</span>
+                                <label for="numberOfReferrals">Number of Referrals</label>
+                                <input type="number" id="numberOfReferrals" name="Number of Referrals" min="0" max="15" value="0">
                             </div>
                             <div class="form-group">
-                                <label for="Contract">Contract</label>
-                                <select id="Contract" name="Contract">
-                                    <option value="Month-to-month">Month-to-month</option>
-                                    <option value="One year">One year</option>
-                                    <option value="Two year">Two year</option>
+                                <label for="tenureMonths">Tenure in Months</label>
+                                <input type="range" id="tenureMonths" name="Tenure in Months" min="0" max="72" value="12" oninput="document.getElementById('tenure-val').textContent=this.value">
+                                <span class="range-value" id="tenure-val">12</span>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="offer">Offer</label>
+                                <select id="offer" name="Offer">
+                                    <option value="None">None</option>
+                                    <option value="Offer A">Offer A</option>
+                                    <option value="Offer B">Offer B</option>
+                                    <option value="Offer C">Offer C</option>
+                                    <option value="Offer D">Offer D</option>
+                                    <option value="Offer E">Offer E</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="contract">Contract</label>
+                                <select id="contract" name="Contract">
+                                    <option value="Month-to-Month">Month-to-Month</option>
+                                    <option value="One Year">One Year</option>
+                                    <option value="Two Year">Two Year</option>
                                 </select>
                             </div>
                         </div>
+
+                        <!-- Billing -->
+                        <div class="form-group-title">Billing</div>
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="MonthlyCharges">Monthly Charges ($)</label>
-                                <input type="range" id="MonthlyCharges" name="MonthlyCharges" min="18" max="120" value="50" step="0.05" oninput="document.getElementById('monthly-val').textContent='$'+this.value">
-                                <span class="range-value" id="monthly-val">$50</span>
+                                <label for="monthlyCharge">Monthly Charge ($)</label>
+                                <input type="range" id="monthlyCharge" name="Monthly Charge" min="0" max="150" value="70" step="0.01" oninput="document.getElementById('monthly-val').textContent='$'+this.value">
+                                <span class="range-value" id="monthly-val">$70</span>
                             </div>
                             <div class="form-group">
-                                <label for="TotalCharges">Total Charges ($)</label>
-                                <input type="number" id="TotalCharges" name="TotalCharges" min="0" max="10000" value="600" step="0.01" placeholder="Enter total charges">
+                                <label for="totalCharges">Total Charges ($)</label>
+                                <input type="number" id="totalCharges" name="Total Charges" min="0" value="840" step="0.01">
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="PaperlessBilling">Paperless Billing</label>
-                                <select id="PaperlessBilling" name="PaperlessBilling">
+                                <label for="avgMonthlyLongDistanceCharges">Avg Monthly Long Distance Charges ($)</label>
+                                <input type="number" id="avgMonthlyLongDistanceCharges" name="Avg Monthly Long Distance Charges" min="0" value="20" step="0.01">
+                            </div>
+                            <div class="form-group">
+                                <label for="totalLongDistanceCharges">Total Long Distance Charges ($)</label>
+                                <input type="number" id="totalLongDistanceCharges" name="Total Long Distance Charges" min="0" value="240" step="0.01">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="totalRefunds">Total Refunds ($)</label>
+                                <input type="number" id="totalRefunds" name="Total Refunds" min="0" value="0" step="0.01">
+                            </div>
+                            <div class="form-group">
+                                <label for="totalExtraDataCharges">Total Extra Data Charges ($)</label>
+                                <input type="number" id="totalExtraDataCharges" name="Total Extra Data Charges" min="0" value="0" step="0.01">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="totalRevenue">Total Revenue ($)</label>
+                                <input type="number" id="totalRevenue" name="Total Revenue" min="0" value="1080" step="0.01">
+                            </div>
+                            <div class="form-group">
+                                <label for="paperlessBilling">Paperless Billing</label>
+                                <select id="paperlessBilling" name="Paperless Billing">
                                     <option value="Yes">Yes</option>
                                     <option value="No">No</option>
                                 </select>
                             </div>
+                        </div>
+                        <div class="form-row single">
                             <div class="form-group">
-                                <label for="PaymentMethod">Payment Method</label>
-                                <select id="PaymentMethod" name="PaymentMethod">
-                                    <option value="Electronic check">Electronic check</option>
-                                    <option value="Mailed check">Mailed check</option>
-                                    <option value="Bank transfer (automatic)">Bank transfer (auto)</option>
-                                    <option value="Credit card (automatic)">Credit card (auto)</option>
+                                <label for="paymentMethod">Payment Method</label>
+                                <select id="paymentMethod" name="Payment Method">
+                                    <option value="Credit Card">Credit Card</option>
+                                    <option value="Bank Withdrawal">Bank Withdrawal</option>
+                                    <option value="Mailed Check">Mailed Check</option>
                                 </select>
                             </div>
                         </div>
@@ -173,15 +213,15 @@
                         <div class="form-group-title">Services</div>
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="PhoneService">Phone Service</label>
-                                <select id="PhoneService" name="PhoneService">
+                                <label for="phoneService">Phone Service</label>
+                                <select id="phoneService" name="Phone Service">
                                     <option value="Yes">Yes</option>
                                     <option value="No">No</option>
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="MultipleLines">Multiple Lines</label>
-                                <select id="MultipleLines" name="MultipleLines">
+                                <label for="multipleLines">Multiple Lines</label>
+                                <select id="multipleLines" name="Multiple Lines">
                                     <option value="No">No</option>
                                     <option value="Yes">Yes</option>
                                     <option value="No phone service">No phone service</option>
@@ -190,16 +230,29 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="InternetService">Internet Service</label>
-                                <select id="InternetService" name="InternetService">
-                                    <option value="Fiber optic">Fiber optic</option>
+                                <label for="internetService">Internet Service</label>
+                                <select id="internetService" name="Internet Service">
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="internetType">Internet Type</label>
+                                <select id="internetType" name="Internet Type">
+                                    <option value="Cable">Cable</option>
                                     <option value="DSL">DSL</option>
-                                    <option value="No">No</option>
+                                    <option value="Fiber Optic">Fiber Optic</option>
                                 </select>
                             </div>
+                        </div>
+                        <div class="form-row">
                             <div class="form-group">
-                                <label for="OnlineSecurity">Online Security</label>
-                                <select id="OnlineSecurity" name="OnlineSecurity">
+                                <label for="avgMonthlyGbDownload">Avg Monthly GB Download</label>
+                                <input type="number" id="avgMonthlyGbDownload" name="Avg Monthly GB Download" min="0" value="20" step="1">
+                            </div>
+                            <div class="form-group">
+                                <label for="onlineSecurity">Online Security</label>
+                                <select id="onlineSecurity" name="Online Security">
                                     <option value="No">No</option>
                                     <option value="Yes">Yes</option>
                                     <option value="No internet service">No internet service</option>
@@ -208,16 +261,16 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="OnlineBackup">Online Backup</label>
-                                <select id="OnlineBackup" name="OnlineBackup">
+                                <label for="onlineBackup">Online Backup</label>
+                                <select id="onlineBackup" name="Online Backup">
                                     <option value="No">No</option>
                                     <option value="Yes">Yes</option>
                                     <option value="No internet service">No internet service</option>
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="DeviceProtection">Device Protection</label>
-                                <select id="DeviceProtection" name="DeviceProtection">
+                                <label for="deviceProtectionPlan">Device Protection Plan</label>
+                                <select id="deviceProtectionPlan" name="Device Protection Plan">
                                     <option value="No">No</option>
                                     <option value="Yes">Yes</option>
                                     <option value="No internet service">No internet service</option>
@@ -226,16 +279,34 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="TechSupport">Tech Support</label>
-                                <select id="TechSupport" name="TechSupport">
+                                <label for="premiumTechSupport">Premium Tech Support</label>
+                                <select id="premiumTechSupport" name="Premium Tech Support">
                                     <option value="No">No</option>
                                     <option value="Yes">Yes</option>
                                     <option value="No internet service">No internet service</option>
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="StreamingTV">Streaming TV</label>
-                                <select id="StreamingTV" name="StreamingTV">
+                                <label for="streamingTv">Streaming TV</label>
+                                <select id="streamingTv" name="Streaming TV">
+                                    <option value="No">No</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No internet service">No internet service</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="streamingMovies">Streaming Movies</label>
+                                <select id="streamingMovies" name="Streaming Movies">
+                                    <option value="No">No</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No internet service">No internet service</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="streamingMusic">Streaming Music</label>
+                                <select id="streamingMusic" name="Streaming Music">
                                     <option value="No">No</option>
                                     <option value="Yes">Yes</option>
                                     <option value="No internet service">No internet service</option>
@@ -244,11 +315,10 @@
                         </div>
                         <div class="form-row single">
                             <div class="form-group">
-                                <label for="StreamingMovies">Streaming Movies</label>
-                                <select id="StreamingMovies" name="StreamingMovies">
+                                <label for="unlimitedData">Unlimited Data</label>
+                                <select id="unlimitedData" name="Unlimited Data">
                                     <option value="No">No</option>
                                     <option value="Yes">Yes</option>
-                                    <option value="No internet service">No internet service</option>
                                 </select>
                             </div>
                         </div>
