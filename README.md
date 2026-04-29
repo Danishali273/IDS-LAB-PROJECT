@@ -152,6 +152,25 @@ Optional:
 
 If model_results.json is missing, the app falls back to values from pipeline_info.pkl.
 
+## Visualizations
+
+Below are some visualizations used in the project:
+
+### Churn Distribution
+![Churn Distribution](churn_distribution.png)
+
+### Churn by Category
+![Churn by Category](churn_by_category.png)
+
+### Correlation Heatmap
+![Correlation Heatmap](correlation_heatmap.png)
+
+### Numerical Analysis
+![Numerical Analysis](numerical_analysis.png)
+
+### Best Model Analysis
+![Best Model Analysis](best_model_analysis.png)
+
 ## Troubleshooting
 
 - Missing module errors: install the listed Python packages in your active environment.
