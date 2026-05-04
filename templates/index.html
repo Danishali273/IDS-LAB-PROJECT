@@ -35,13 +35,14 @@
                 <span class="logo-text">ChurnGuard<span class="logo-ai">AI</span></span>
             </div>
             <nav class="nav">
-                <a href="#predict" class="nav-link active" id="nav-predict">Predict</a>
-                <a href="#insights" class="nav-link" id="nav-insights">Insights</a>
-                <a href="#models" class="nav-link" id="nav-models">Models</a>
+                <a href="#hero" class="nav-link">Home</a>
+                <a href="#predict" class="nav-link active">Predict</a>
+                <a href="#insights" class="nav-link">Insights</a>
+                <a href="#models" class="nav-link">Models</a>
             </nav>
             <div class="header-badge" id="model-badge">
                 <span class="badge-dot"></span>
-                <span id="badge-model-name">Loading...</span>
+                <span id="badge-model-name">Loading Model...</span>
             </div>
         </div>
     </header>
@@ -54,7 +55,7 @@
                     Predict Customer <span class="gradient-text">Churn</span> with AI
                 </h1>
                 <p class="hero-subtitle">
-                    Advanced machine learning for telecom customer retention — analyze risk factors, predict churn probability, and take proactive action.
+                    Advanced machine learning for telecom customer retention — analyze risk factors, predict churn probability, and take proactive action to keep your customers.
                 </p>
                 <div class="hero-stats" id="hero-stats">
                     <div class="stat-card">
@@ -75,272 +76,253 @@
 
         <!-- Prediction Section -->
         <section class="section" id="predict">
-            <h2 class="section-title">Customer Churn Prediction</h2>
-            <p class="section-desc">Enter customer details below to predict their likelihood of churning.</p>
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">Risk Assessment Dashboard</h2>
+                    <p class="section-desc">Complete the profile below to generate a real-time risk analysis for a specific customer.</p>
+                </div>
+                <div class="form-steps-indicator" id="form-steps-indicator">
+                    <span class="step-dot active" data-step="1" title="Demographics"></span>
+                    <span class="step-dot" data-step="2" title="Plan & Account"></span>
+                    <span class="step-dot" data-step="3" title="Usage & Billing"></span>
+                    <span class="step-dot" data-step="4" title="Services"></span>
+                </div>
+            </div>
 
             <div class="prediction-grid">
-                <!-- Input Form -->
+                <!-- Multi-Step Form -->
                 <div class="glass-card form-card">
-                    <h3 class="card-title">
-                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="7" r="4" stroke="currentColor" stroke-width="1.5"/><path d="M3 18c0-3.866 3.134-7 7-7s7 3.134 7 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-                        Customer Information
-                    </h3>
-
                     <form id="prediction-form">
-                        <!-- Demographics -->
-                        <div class="form-group-title">Demographics</div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="gender">Gender</label>
-                                <select id="gender" name="Gender">
-                                    <option value="Male">Male</option>
-                                    <option value="Female">Female</option>
-                                </select>
+                        <!-- Step 1: Demographics -->
+                        <div class="form-step active" data-step="1">
+                            <h3 class="card-title">
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="7" r="4" stroke="currentColor" stroke-width="1.5"/><path d="M3 18c0-3.866 3.134-7 7-7s7 3.134 7 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                                1. Demographics
+                            </h3>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="gender">Gender</label>
+                                    <select id="gender" name="Gender">
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="age">Age</label>
+                                    <input type="range" id="age" name="Age" min="18" max="100" value="40" class="sync-input">
+                                    <span class="range-value" id="age-val">40</span>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="age">Age</label>
-                                <input type="range" id="age" name="Age" min="18" max="100" value="40" oninput="document.getElementById('age-val').textContent=this.value">
-                                <span class="range-value" id="age-val">40</span>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="married">Married</label>
-                                <select id="married" name="Married">
-                                    <option value="No">No</option>
-                                    <option value="Yes">Yes</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="numberOfDependents">Number of Dependents</label>
-                                <input type="number" id="numberOfDependents" name="Number of Dependents" min="0" max="10" value="0">
-                            </div>
-                        </div>
-
-                        <!-- Account Info -->
-                        <div class="form-group-title">Account Information</div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="numberOfReferrals">Number of Referrals</label>
-                                <input type="number" id="numberOfReferrals" name="Number of Referrals" min="0" max="15" value="0">
-                            </div>
-                            <div class="form-group">
-                                <label for="tenureMonths">Tenure in Months</label>
-                                <input type="range" id="tenureMonths" name="Tenure in Months" min="0" max="72" value="12" oninput="document.getElementById('tenure-val').textContent=this.value">
-                                <span class="range-value" id="tenure-val">12</span>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="offer">Offer</label>
-                                <select id="offer" name="Offer">
-                                    <option value="None">None</option>
-                                    <option value="Offer A">Offer A</option>
-                                    <option value="Offer B">Offer B</option>
-                                    <option value="Offer C">Offer C</option>
-                                    <option value="Offer D">Offer D</option>
-                                    <option value="Offer E">Offer E</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="contract">Contract</label>
-                                <select id="contract" name="Contract">
-                                    <option value="Month-to-Month">Month-to-Month</option>
-                                    <option value="One Year">One Year</option>
-                                    <option value="Two Year">Two Year</option>
-                                </select>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="married">Married</label>
+                                    <select id="married" name="Married">
+                                        <option value="No">No</option>
+                                        <option value="Yes">Yes</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="numberOfDependents">Number of Dependents</label>
+                                    <input type="number" id="numberOfDependents" name="Number of Dependents" min="0" max="10" value="0">
+                                </div>
                             </div>
                         </div>
 
-                        <!-- Billing -->
-                        <div class="form-group-title">Billing</div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="monthlyCharge">Monthly Charge ($)</label>
-                                <input type="range" id="monthlyCharge" name="Monthly Charge" min="0" max="150" value="70" step="0.01" oninput="document.getElementById('monthly-val').textContent='$'+this.value">
-                                <span class="range-value" id="monthly-val">$70</span>
+                        <!-- Step 2: Plan & Account -->
+                        <div class="form-step" data-step="2">
+                            <h3 class="card-title">
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="3" y="4" width="14" height="12" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M7 8h6M7 12h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                                2. Plan & Account
+                            </h3>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="offer">Offer</label>
+                                    <select id="offer" name="Offer">
+                                        <option value="None">None</option>
+                                        <option value="Offer A">Offer A</option>
+                                        <option value="Offer B">Offer B</option>
+                                        <option value="Offer C">Offer C</option>
+                                        <option value="Offer D">Offer D</option>
+                                        <option value="Offer E">Offer E</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="contract">Contract Type</label>
+                                    <select id="contract" name="Contract">
+                                        <option value="Month-to-Month">Month-to-Month</option>
+                                        <option value="One Year">One Year</option>
+                                        <option value="Two Year">Two Year</option>
+                                    </select>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="totalCharges">Total Charges ($)</label>
-                                <input type="number" id="totalCharges" name="Total Charges" min="0" value="840" step="0.01">
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="avgMonthlyLongDistanceCharges">Avg Monthly Long Distance Charges ($)</label>
-                                <input type="number" id="avgMonthlyLongDistanceCharges" name="Avg Monthly Long Distance Charges" min="0" value="20" step="0.01">
-                            </div>
-                            <div class="form-group">
-                                <label for="totalLongDistanceCharges">Total Long Distance Charges ($)</label>
-                                <input type="number" id="totalLongDistanceCharges" name="Total Long Distance Charges" min="0" value="240" step="0.01">
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="totalRefunds">Total Refunds ($)</label>
-                                <input type="number" id="totalRefunds" name="Total Refunds" min="0" value="0" step="0.01">
-                            </div>
-                            <div class="form-group">
-                                <label for="totalExtraDataCharges">Total Extra Data Charges ($)</label>
-                                <input type="number" id="totalExtraDataCharges" name="Total Extra Data Charges" min="0" value="0" step="0.01">
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="totalRevenue">Total Revenue ($)</label>
-                                <input type="number" id="totalRevenue" name="Total Revenue" min="0" value="1080" step="0.01">
-                            </div>
-                            <div class="form-group">
-                                <label for="paperlessBilling">Paperless Billing</label>
-                                <select id="paperlessBilling" name="Paperless Billing">
-                                    <option value="Yes">Yes</option>
-                                    <option value="No">No</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-row single">
-                            <div class="form-group">
-                                <label for="paymentMethod">Payment Method</label>
-                                <select id="paymentMethod" name="Payment Method">
-                                    <option value="Credit Card">Credit Card</option>
-                                    <option value="Bank Withdrawal">Bank Withdrawal</option>
-                                    <option value="Mailed Check">Mailed Check</option>
-                                </select>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="tenureMonths">Tenure in Months</label>
+                                    <input type="range" id="tenureMonths" name="Tenure in Months" min="1" max="72" value="12" class="sync-input">
+                                    <span class="range-value" id="tenure-val">12 months</span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="numberOfReferrals">Referrals Made</label>
+                                    <input type="number" id="numberOfReferrals" name="Number of Referrals" min="0" max="15" value="0">
+                                </div>
                             </div>
                         </div>
 
-                        <!-- Services -->
-                        <div class="form-group-title">Services</div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="phoneService">Phone Service</label>
-                                <select id="phoneService" name="Phone Service">
-                                    <option value="Yes">Yes</option>
-                                    <option value="No">No</option>
-                                </select>
+                        <!-- Step 3: Usage & Billing -->
+                        <div class="form-step" data-step="3">
+                            <h3 class="card-title">
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7" stroke="currentColor" stroke-width="1.5"/><path d="M10 7v3l2 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 10h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                                3. Usage & Billing
+                            </h3>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="monthlyCharge">Monthly Charge ($)</label>
+                                    <input type="range" id="monthlyCharge" name="Monthly Charge" min="0" max="150" value="70" step="0.5" class="sync-input">
+                                    <span class="range-value" id="monthly-val">$70.00</span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="totalCharges">Estimated Total Charges ($)</label>
+                                    <input type="number" id="totalCharges" name="Total Charges" min="0" value="840" step="0.01">
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="multipleLines">Multiple Lines</label>
-                                <select id="multipleLines" name="Multiple Lines">
-                                    <option value="No">No</option>
-                                    <option value="Yes">Yes</option>
-                                    <option value="No phone service">No phone service</option>
-                                </select>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="avgMonthlyGbDownload">Avg GB Download / Mo</label>
+                                    <input type="number" id="avgMonthlyGbDownload" name="Avg Monthly GB Download" min="0" value="20">
+                                </div>
+                                <div class="form-group">
+                                    <label for="paymentMethod">Payment Method</label>
+                                    <select id="paymentMethod" name="Payment Method">
+                                        <option value="Credit Card">Credit Card</option>
+                                        <option value="Bank Withdrawal">Bank Withdrawal</option>
+                                        <option value="Mailed Check">Mailed Check</option>
+                                    </select>
+                                </div>
                             </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="paperlessBilling">Paperless Billing</label>
+                                    <select id="paperlessBilling" name="Paperless Billing">
+                                        <option value="Yes">Yes</option>
+                                        <option value="No">No</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="totalRevenue">Total Customer Revenue ($)</label>
+                                    <input type="number" id="totalRevenue" name="Total Revenue" min="0" value="1080" step="0.01">
+                                </div>
+                            </div>
+                            <!-- Hidden system inputs to maintain model schema -->
+                            <input type="hidden" id="avgMonthlyLongDistanceCharges" value="20">
+                            <input type="hidden" id="totalLongDistanceCharges" value="240">
+                            <input type="hidden" id="totalRefunds" value="0">
+                            <input type="hidden" id="totalExtraDataCharges" value="0">
                         </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="internetService">Internet Service</label>
-                                <select id="internetService" name="Internet Service">
-                                    <option value="Yes">Yes</option>
-                                    <option value="No">No</option>
-                                </select>
+
+                        <!-- Step 4: Services -->
+                        <div class="form-step" data-step="4">
+                            <h3 class="card-title">
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M2 10h4m4-8v4m8 4h-4m-4 8v-4m-6-6l2.8 2.8m8.4-8.4L14.4 7.2m0 5.6l2.8 2.8M7.2 14.4L4.4 17.2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                                4. Services
+                            </h3>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="phoneService">Phone Service</label>
+                                    <select id="phoneService" name="Phone Service">
+                                        <option value="Yes">Yes</option>
+                                        <option value="No">No</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="internetService">Internet Service</label>
+                                    <select id="internetService" name="Internet Service">
+                                        <option value="Yes">Yes</option>
+                                        <option value="No">No</option>
+                                    </select>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="internetType">Internet Type</label>
-                                <select id="internetType" name="Internet Type">
-                                    <option value="Cable">Cable</option>
-                                    <option value="DSL">DSL</option>
-                                    <option value="Fiber Optic">Fiber Optic</option>
-                                </select>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="internetType">Internet Type</label>
+                                    <select id="internetType" name="Internet Type">
+                                        <option value="Fiber Optic">Fiber Optic</option>
+                                        <option value="Cable">Cable</option>
+                                        <option value="DSL">DSL</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="onlineSecurity">Online Security</label>
+                                    <select id="onlineSecurity" name="Online Security">
+                                        <option value="No">No</option>
+                                        <option value="Yes">Yes</option>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="avgMonthlyGbDownload">Avg Monthly GB Download</label>
-                                <input type="number" id="avgMonthlyGbDownload" name="Avg Monthly GB Download" min="0" value="20" step="1">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="premiumTechSupport">Premium Tech Support</label>
+                                    <select id="premiumTechSupport" name="Premium Tech Support">
+                                        <option value="No">No</option>
+                                        <option value="Yes">Yes</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="unlimitedData">Unlimited Data</label>
+                                    <select id="unlimitedData" name="Unlimited Data">
+                                        <option value="Yes">Yes</option>
+                                        <option value="No">No</option>
+                                    </select>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="onlineSecurity">Online Security</label>
-                                <select id="onlineSecurity" name="Online Security">
-                                    <option value="No">No</option>
-                                    <option value="Yes">Yes</option>
-                                    <option value="No internet service">No internet service</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="onlineBackup">Online Backup</label>
-                                <select id="onlineBackup" name="Online Backup">
-                                    <option value="No">No</option>
-                                    <option value="Yes">Yes</option>
-                                    <option value="No internet service">No internet service</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="deviceProtectionPlan">Device Protection Plan</label>
-                                <select id="deviceProtectionPlan" name="Device Protection Plan">
-                                    <option value="No">No</option>
-                                    <option value="Yes">Yes</option>
-                                    <option value="No internet service">No internet service</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="premiumTechSupport">Premium Tech Support</label>
-                                <select id="premiumTechSupport" name="Premium Tech Support">
-                                    <option value="No">No</option>
-                                    <option value="Yes">Yes</option>
-                                    <option value="No internet service">No internet service</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="streamingTv">Streaming TV</label>
-                                <select id="streamingTv" name="Streaming TV">
-                                    <option value="No">No</option>
-                                    <option value="Yes">Yes</option>
-                                    <option value="No internet service">No internet service</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="streamingMovies">Streaming Movies</label>
-                                <select id="streamingMovies" name="Streaming Movies">
-                                    <option value="No">No</option>
-                                    <option value="Yes">Yes</option>
-                                    <option value="No internet service">No internet service</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="streamingMusic">Streaming Music</label>
-                                <select id="streamingMusic" name="Streaming Music">
-                                    <option value="No">No</option>
-                                    <option value="Yes">Yes</option>
-                                    <option value="No internet service">No internet service</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-row single">
-                            <div class="form-group">
-                                <label for="unlimitedData">Unlimited Data</label>
-                                <select id="unlimitedData" name="Unlimited Data">
-                                    <option value="No">No</option>
-                                    <option value="Yes">Yes</option>
-                                </select>
+                            <!-- More services -->
+                            <div class="services-grid-mini">
+                                <div class="mini-service">
+                                    <label><input type="checkbox" id="multipleLines" value="Yes"> Multiple Lines</label>
+                                </div>
+                                <div class="mini-service">
+                                    <label><input type="checkbox" id="onlineBackup" value="Yes"> Online Backup</label>
+                                </div>
+                                <div class="mini-service">
+                                    <label><input type="checkbox" id="deviceProtectionPlan" value="Yes"> Device Protection</label>
+                                </div>
+                                <div class="mini-service">
+                                    <label><input type="checkbox" id="streamingTv" value="Yes"> Streaming TV</label>
+                                </div>
+                                <div class="mini-service">
+                                    <label><input type="checkbox" id="streamingMovies" value="Yes"> Streaming Movies</label>
+                                </div>
+                                <div class="mini-service">
+                                    <label><input type="checkbox" id="streamingMusic" value="Yes"> Streaming Music</label>
+                                </div>
                             </div>
                         </div>
 
-                        <button type="submit" class="predict-btn" id="predict-btn">
-                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2L18 10L10 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M18 10H2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-                            Predict Churn
-                        </button>
+                        <!-- Form Navigation -->
+                        <div class="form-nav">
+                            <button type="button" class="nav-btn prev hidden" id="prev-btn">
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 13l-5-5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                Previous
+                            </button>
+                            <div class="spacer"></div>
+                            <button type="button" class="nav-btn next" id="next-btn">
+                                Next Step
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </button>
+                            <button type="submit" class="predict-btn hidden" id="predict-btn">
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2L18 10L10 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M18 10H2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                                Generate Prediction
+                            </button>
+                        </div>
                     </form>
                 </div>
 
                 <!-- Results Panel -->
                 <div class="results-panel">
-                    <!-- Prediction Result -->
+                    <!-- Prediction Result Card -->
                     <div class="glass-card result-card" id="result-card">
                         <div class="result-placeholder" id="result-placeholder">
-                            <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
-                                <circle cx="32" cy="32" r="28" stroke="url(#resGrad)" stroke-width="2" stroke-dasharray="8 4"/>
-                                <path d="M22 32L28 38L42 24" stroke="url(#resGrad)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
-                                <defs><linearGradient id="resGrad" x1="0" y1="0" x2="64" y2="64"><stop offset="0%" stop-color="#6366f1"/><stop offset="100%" stop-color="#06b6d4"/></linearGradient></defs>
-                            </svg>
-                            <p>Enter customer details and click <strong>Predict Churn</strong> to see results</p>
+                            <div class="loader-ring"><div></div><div></div><div></div><div></div></div>
+                            <p>Complete the profile and click <strong>Generate Prediction</strong> to see analysis</p>
                         </div>
                         <div class="result-content hidden" id="result-content">
                             <div class="gauge-container">
@@ -359,39 +341,39 @@
                                 </svg>
                             </div>
                             <div class="prediction-badge" id="prediction-badge">
-                                <span class="badge-icon" id="badge-icon">●</span>
+                                <span class="badge-icon" id="badge-icon">✓</span>
                                 <span id="prediction-label">—</span>
                             </div>
-                            <div class="risk-level" id="risk-level">
-                                <span>Risk Level:</span>
+                            <div class="risk-summary" id="risk-level">
                                 <span class="risk-tag" id="risk-tag">—</span>
                             </div>
                             <div class="probability-bars">
                                 <div class="prob-bar">
                                     <span class="prob-label">Churn</span>
-                                    <div class="prob-track">
-                                        <div class="prob-fill churn-fill" id="churn-bar" style="width: 0%"></div>
-                                    </div>
+                                    <div class="prob-track"><div class="prob-fill churn-fill" id="churn-bar" style="width: 0%"></div></div>
                                     <span class="prob-value" id="churn-pct">0%</span>
                                 </div>
                                 <div class="prob-bar">
-                                    <span class="prob-label">Retain</span>
-                                    <div class="prob-track">
-                                        <div class="prob-fill retain-fill" id="retain-bar" style="width: 0%"></div>
-                                    </div>
+                                    <span class="prob-label">Stay</span>
+                                    <div class="prob-track"><div class="prob-fill retain-fill" id="retain-bar" style="width: 0%"></div></div>
                                     <span class="prob-value" id="retain-pct">0%</span>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Risk Factors -->
+                    <!-- Risk Factors Card -->
                     <div class="glass-card risk-card hidden" id="risk-card">
                         <h3 class="card-title">
                             <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2L18 18H2L10 2Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M10 8V12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="10" cy="15" r="0.5" fill="currentColor"/></svg>
-                            Risk Factors
+                            Key Risk Factors
                         </h3>
                         <ul class="risk-list" id="risk-list"></ul>
+                        
+                        <div class="recommendation-box" id="rec-box">
+                            <h4>Suggested Retention Action</h4>
+                            <p id="rec-text">Generating recommendations...</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -399,27 +381,76 @@
 
         <!-- Insights Section -->
         <section class="section" id="insights">
-            <h2 class="section-title">Feature Insights</h2>
-            <p class="section-desc">Discover which factors most influence customer churn decisions.</p>
-            <div class="glass-card">
-                <h3 class="card-title">
-                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="10" width="3" height="8" rx="1" fill="currentColor" opacity="0.4"/><rect x="7" y="6" width="3" height="12" rx="1" fill="currentColor" opacity="0.6"/><rect x="12" y="3" width="3" height="15" rx="1" fill="currentColor" opacity="0.8"/><rect x="17" y="1" width="3" height="17" rx="1" fill="currentColor"/></svg>
-                    Top Feature Importances
-                </h3>
-                <div class="feature-chart" id="feature-chart"></div>
+            <h2 class="section-title">AI & Data Insights</h2>
+            <p class="section-desc">Analysis of the factors driving churn across the entire customer base.</p>
+            
+            <div class="insights-grid">
+                <div class="glass-card">
+                    <h3 class="card-title">Top 15 Feature Importances</h3>
+                    <div class="feature-chart" id="feature-chart"></div>
+                </div>
+                <div class="glass-card">
+                    <h3 class="card-title">Churn Drivers</h3>
+                    <div class="drivers-list">
+                        <div class="driver-item high">
+                            <span class="driver-icon">↑</span>
+                            <div class="driver-info">
+                                <h5>Month-to-Month Contracts</h5>
+                                <p>Customers on short-term contracts are 3x more likely to churn.</p>
+                            </div>
+                        </div>
+                        <div class="driver-item high">
+                            <span class="driver-icon">↑</span>
+                            <div class="driver-info">
+                                <h5>Fiber Optic Users</h5>
+                                <p>Despite high speeds, fiber users show higher dissatisfaction rates.</p>
+                            </div>
+                        </div>
+                        <div class="driver-item low">
+                            <span class="driver-icon">↓</span>
+                            <div class="driver-info">
+                                <h5>Long Tenure (>2 years)</h5>
+                                <p>Loyalty increases significantly after the first 24 months.</p>
+                            </div>
+                        </div>
+                        <div class="driver-item low">
+                            <span class="driver-icon">↓</span>
+                            <div class="driver-info">
+                                <h5>Multi-Service Bundles</h5>
+                                <p>Adding Online Security or Tech Support reduces churn by 40%.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Image Gallery of Notebook Plots -->
+            <div class="eda-gallery">
+                <div class="glass-card gallery-item">
+                    <h5>Churn Distribution</h5>
+                    <img src="/static/churn_distribution.png" alt="Churn Distribution" loading="lazy">
+                </div>
+                <div class="glass-card gallery-item">
+                    <h5>Analysis by Category</h5>
+                    <img src="/static/churn_by_category.png" alt="Churn Category Analysis" loading="lazy">
+                </div>
+                <div class="glass-card gallery-item">
+                    <h5>Correlation Map</h5>
+                    <img src="/static/correlation_heatmap.png" alt="Feature Correlation" loading="lazy">
+                </div>
             </div>
         </section>
 
         <!-- Models Section -->
         <section class="section" id="models">
-            <h2 class="section-title">Model Comparison</h2>
-            <p class="section-desc">Performance metrics across all trained models.</p>
+            <h2 class="section-title">Model Performance</h2>
+            <p class="section-desc">Comparing our production model with other evaluation candidates.</p>
             <div class="glass-card">
                 <div class="table-container">
-                    <table class="model-table" id="model-table">
+                    <table class="model-table">
                         <thead>
                             <tr>
-                                <th>Model</th>
+                                <th>Algorithm</th>
                                 <th>Accuracy</th>
                                 <th>Precision</th>
                                 <th>Recall</th>
@@ -437,7 +468,15 @@
 
     <!-- Footer -->
     <footer class="footer">
-        <p>ChurnGuard AI — Powered by Machine Learning · Built with Python, Scikit-Learn & XGBoost</p>
+        <div class="footer-content">
+            <p>&copy; 2026 ChurnGuard AI Portfolio Project · Built with Flask, Scikit-Learn & XGBoost</p>
+            <div class="tech-stack">
+                <span>Python</span>
+                <span>Pandas</span>
+                <span>JavaScript</span>
+                <span>CSS3</span>
+            </div>
+        </div>
     </footer>
 
     <script src="/static/script.js"></script>
